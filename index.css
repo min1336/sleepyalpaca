@@ -79,9 +79,9 @@ body {
     padding-bottom:10vh;
 }
 #middle h1 {
-    color:rgb(72, 38, 142);
-    font-size:70px;
-    text-decoration:underline;
+    color:rgb(35, 35, 35);
+    font-size:85px;
+    text-decoration: none;
 }
 #about {
     width:10vw;
