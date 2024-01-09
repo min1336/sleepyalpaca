@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
 
 body {
     padding:0px;
     margin:0px;
-    background:linear-gradient(0deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url("https://raw.githubusercontent.com/min1336/sleepyalpaca/main/box-write-in-it-5279529_1920.jpg") center center;
+    background:linear-gradient(0deg,rgba(167, 86, 86, 0.5),rgba(123, 102, 12, 0.504)),url("https://raw.githubusercontent.com/min1336/sleepyalpaca/main/box-write-in-it-5279529_1920.jpg") center center;
     background-size:cover;
     width:100vw;
     height:100vh;
     overflow:hidden;
-    font-family: 'Josefin Sans', sans-serif;
 }
 #loading {
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background:rgb(0, 0, 0);
+    background:rgba(35, 4, 36, 0.785);
     z-index: 999;
     display: flex;
     justify-content: center;
@@ -80,11 +80,12 @@ body {
     padding-bottom:10vh;
 }
 #middle h1 {
-    color:rgb(35, 35, 35);
+    color:rgba(137, 56, 56, 0.684);
     font-size:85px;
     text-decoration: none;
+    font-family: 'Rubik Glitch', system-ui;
 }
-#about {
+#blog {
     width:10vw;
     height:10vw;
     text-align:center;
@@ -137,16 +138,16 @@ body {
     transition:0.4s ease-in-out;
     border-radius:100px 100px 0px 0px;
 }
-#about:hover {
-    background:rgba(255,50,50,0.9);
+#blog:hover {
+    background:rgba(137, 56, 56, 0.684);
     cursor:pointer;
 }
 #work:hover {
-    background:rgba(5, 119, 92, 0.9);
+    background:rgba(137, 56, 56, 0.684);
     cursor:pointer;
 }
 #career:hover {
-    background:rgba(16, 140, 161, 0.9);
+    background:rgba(137, 56, 56, 0.684);
     cursor:pointer;
 }
 #middle table {
@@ -156,23 +157,11 @@ body {
 #middle table tr td {
     text-align:center;
 }
-.social {
-    color:#fff;
-    font-size:22px;
-    border-radius:50%;
-    transition:0.4s ease-in-out;
-    margin:0px 8px;
-    text-align:center;
-}
-.social:hover { 
-    cursor: pointer;
-    color:rgb(255, 50, 50);
-}
 .container {
     width:90vw;
     height:90vh;
     padding:5vh 5vw;
-    background:rgb(255, 50, 50);
+    background:rgb(0, 0, 0);
     color:#fff;
     z-index:9;
     position:fixed;
@@ -211,39 +200,6 @@ body {
 }
 .container p {
     font-size:21px;
-}
-.btn_one {
-    font-size:18px;
-    font-family: 'Josefin Sans', sans-serif;
-    color:#fff;
-    background:transparent;
-    border:3px solid #fff;
-    padding:8px 40px;
-    border-radius:80px;
-    font-weight:bold;
-    margin:2vh 10px;
-    transition:0.4s ease-in-out;
-}
-.btn_one:hover {
-    cursor:pointer;
-    color:rgb(255, 50, 50);
-    background:#fff;
-}
-.btn_two {
-    font-size:18px;
-    font-family: 'Josefin Sans', sans-serif;
-    color:rgb(255, 50, 50);
-    background:#fff;
-    border:3px solid #fff;
-    padding:8px 40px;
-    border-radius:80px;
-    font-weight:bold;
-    margin:2vh 10px;
-    transition:0.4s ease-in-out;
-}
-.btn_two:hover {
-    cursor:pointer;
-    padding:8px 60px;
 }
 .container form input {
     width:46%;
@@ -322,7 +278,7 @@ body {
 }
 
 @media (max-width: 800px){ 
-    #about {
+    #blog {
         display:none;
     }
     #career {

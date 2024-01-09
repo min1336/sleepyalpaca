@@ -1,15 +1,15 @@
-function showabout(){
-    $("#about_container").css("display","inherit");
-    $("#about_container").addClass("animated slideInLeft");
+function showblog(){
+    $("#blog_container").css("display","inherit");
+    $("#blog_container").addClass("animated slideInLeft");
     setTimeout(function(){
-        $("#about_container").removeClass("animated slideInLeft");
+        $("#blog_container").removeClass("animated slideInLeft");
     },800);
 }
-function closeabout(){
-    $("#about_container").addClass("animated slideOutLeft");
+function closeblog(){
+    $("#blog_container").addClass("animated slideOutLeft");
     setTimeout(function(){
-        $("#about_container").removeClass("animated slideOutLeft");
-        $("#about_container").css("display","none");
+        $("#blog_container").removeClass("animated slideOutLeft");
+        $("#blog_container").css("display","none");
     },800);
 }
 function showwork(){
@@ -46,7 +46,7 @@ setTimeout(function(){
       $("#loading").removeClass("animated fadeOut");
       $("#loading").css("display","none");
       $("#box").css("display","none");
-      $("#about").removeClass("animated fadeIn");
+      $("#blog").removeClass("animated fadeIn");
       $("#career").removeClass("animated fadeIn");
       $("#work").removeClass("animated fadeIn");
     },1000);
