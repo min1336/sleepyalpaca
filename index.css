@@ -14,7 +14,7 @@ body {
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background:rgb(255, 50, 50);
+    background:rgb(0, 0, 0);
     z-index: 999;
     display: flex;
     justify-content: center;
@@ -22,12 +22,13 @@ body {
     align-items: center;
 }
 #spinner {
-    animation: rotate 0.56s infinite linear;
+    animation: rotate 1.5s ease-in-out;
     width:50px;
     height:50px;
-    border:12px solid #fff;
-    border-bottom:12px solid rgb(255, 50, 50);
-    border-radius:50%;
+    border:12px solid #bcbcbc;
+    border-right:12px solid rgb(181, 76, 111);
+    border-bottom:12px solid rgb(181, 76, 111);
+    border-radius:100%;
     margin:0;
 }
 @keyframes rotate {
