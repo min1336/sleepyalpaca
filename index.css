@@ -4,7 +4,7 @@
 body {
     padding:0px;
     margin:0px;
-    background:linear-gradient(0deg,rgba(167, 86, 86, 0.5),rgba(123, 102, 12, 0.504)),url("https://raw.githubusercontent.com/min1336/sleepyalpaca/main/box-write-in-it-5279529_1920.jpg") center center;
+    background:linear-gradient(0deg,rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.761)),url("https://raw.githubusercontent.com/min1336/sleepyalpaca/main/mystical-6980870_1920.jpg") center center;
     background-size:cover;
     width:100vw;
     height:100vh;
@@ -14,7 +14,7 @@ body {
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background:rgba(35, 4, 36, 0.785);
+    background:rgb(0, 0, 0);
     z-index: 999;
     display: flex;
     justify-content: center;
@@ -22,13 +22,12 @@ body {
     align-items: center;
 }
 #spinner {
-    animation: rotate 1.5s ease-in-out;
+    animation: rotate 0.5s infinite linear;
     width:50px;
     height:50px;
-    border:12px solid #bcbcbc;
-    border-right:12px solid rgb(181, 76, 111);
-    border-bottom:12px solid rgb(181, 76, 111);
-    border-radius:100%;
+    border:12px solid #000000;
+    border-bottom:12px solid rgb(49, 57, 80);
+    border-radius:0%;
     margin:0;
 }
 @keyframes rotate {
@@ -48,10 +47,10 @@ body {
     display:inline-block;
 }
 .box1 {
-    background:rgb(255, 50, 50);
+    background:rgb(49, 57, 80);
 }
 .box2 {
-    background:rgb(255, 50, 50);
+    background:rgb(49, 57, 80);
     margin-left:-5px;
 }
 #menu {
@@ -80,7 +79,7 @@ body {
     padding-bottom:10vh;
 }
 #middle h1 {
-    color:rgba(137, 56, 56, 0.684);
+    color:rgb(181, 181, 181);
     font-size:85px;
     text-decoration: none;
     font-family: 'Rubik Glitch', system-ui;
