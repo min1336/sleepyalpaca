@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>막대 그래프 동적 업데이트</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>그래프</h1>
+    <canvas id="myChart"></canvas>
+
+    <script>
+        let totalData = 0;
+        const ctx = document.getElementById('myChart').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['누적 합계'],
+                datasets: [{
+                    label: '입력된 숫자 합계',
+                    data: [0],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'timestamp') { // timestamp로 변경 감지
+                updateChart();
+            }
+        });
+
+        function updateChart() {
+            const operation = localStorage.getItem('operation');
+            const inputData = parseInt(localStorage.getItem('inputData'));
+            updateData(operation, inputData);
+        }
+
+        function updateData(operation, inputData) {
+            if (!isNaN(inputData)) {
+                if (operation === 'add') {
+                    totalData += inputData;
+                } else if (operation === 'subtract') {
+                    totalData -= inputData;
+                    totalData = Math.max(0, totalData);
+                }
+                adjustYAxisMax(totalData);
+                myChart.data.datasets[0].data = [totalData];
+                myChart.update();
+            }
+        }
+
+        function adjustYAxisMax(totalData) {
+            myChart.options.scales.y.max = Math.max(100, Math.ceil(Math.abs(totalData) * 1.2));
+        }
+    </script>
+</body>
+</html>

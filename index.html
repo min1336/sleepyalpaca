@@ -1,11 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>데이터 입력 및 그래프 관리</title>
 </head>
 <body>
-    <h1>hello world!</h1>
+    <h1>숫자 입력</h1>
+    <input type="text" id="dataInput" placeholder="숫자를 입력하세요">
+    <button onclick="addData()">더하기</button>
+    <button onclick="subtractData()">빼기</button>
+
+    <script>
+        let chartWindow = window.open('', 'chartWindow'); // 창 참조 가져오기, 없으면 null 반환
+
+        function addData() {
+            const inputData = parseInt(document.getElementById('dataInput').value);
+            const operation = 'add';
+            sendData(inputData, operation);
+        }
+
+        function subtractData() {
+            const inputData = parseInt(document.getElementById('dataInput').value);
+            const operation = 'subtract';
+            sendData(inputData, operation);
+        }
+
+        function sendData(inputData, operation) {
+            if (!isNaN(inputData)) {
+                localStorage.setItem('operation', operation);
+                localStorage.setItem('inputData', inputData);
+                localStorage.setItem('timestamp', new Date().getTime()); // 갱신을 위한 타임스탬프 추가
+
+                // 이미 열려 있는 창을 재활용하거나 새로 엽니다.
+                if (!chartWindow || chartWindow.closed) {
+                    chartWindow = window.open('chart.html', 'chartWindow');
+                } else {
+                    chartWindow.focus(); // 창이 이미 열려 있으면 포커스
+                }
+            }
+        }
+    </script>
 </body>
 </html>
