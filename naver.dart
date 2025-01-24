@@ -24,7 +24,7 @@ class _NaverMapAppState extends State<NaverMapApp> {
   double _calculatedDistance = 0.0; // 계산된 총 거리 (km 단위)
   bool _isLoading = false; // 로딩 상태 플래그
   bool _isSearching = false; // 검색 상태 플래그
-  double? _selectedDistance; // 선택한 거리 (km)
+  String? _selectedDistance; // 선택한 거리 (km)
 
 
   final List<String> _searchHistory = [];  // 🔥 최근 검색 기록 추가
@@ -112,7 +112,7 @@ class _NaverMapAppState extends State<NaverMapApp> {
 
     _mapController!.addOverlay(NPolylineOverlay(
       id: 'route', // 오버레이 ID
-      color: Colors.lightGreen, // 경로 색상
+      color: Colors.red, // 경로 색상
       width: 4, // 경로 선 두께
       coords: polylineCoordinates, // 경로 좌표
     ));
@@ -244,14 +244,15 @@ class _NaverMapAppState extends State<NaverMapApp> {
 
     if (_mapController == null || _start == null) return;
     // 지도 컨트롤러 또는 시작 위치가 없으면 함수 종료
-
+/*
     _mapController!.addOverlay(
         NMarker(
           id: 'distance_marker', // 마커의 고유 ID
           position: _start!, // 마커를 표시할 위치 ( 출발지 )
         ));
+ */
   }
-
+/*
 // ⭐ 경유지마다 마커를 추가하는 함수
   void _addWaypointMarkers() {
     if (_mapController == null) return;
@@ -273,6 +274,7 @@ class _NaverMapAppState extends State<NaverMapApp> {
       ));
     }
   }
+ */
 
 // _getDirections 함수 수정: 경유지 마커 추가
   Future<void> _getDirections() async {
@@ -314,7 +316,7 @@ class _NaverMapAppState extends State<NaverMapApp> {
       // 경로의 총 거리 추출
       _showTotalDistance(totalDistance); // 표시
 
-      _addWaypointMarkers(); // 마커 지도에 추가
+      //_addWaypointMarkers(); // 마커 지도에 추가
     }
   }
 
@@ -357,7 +359,7 @@ class _NaverMapAppState extends State<NaverMapApp> {
                         child: TextField(
                           controller: _startController, // 입력 필드 컨트롤러
                           decoration: InputDecoration(
-                            labelText: '출발지 주소 입력', // 입력 필드 라벨
+                            labelText: '출발지', // 입력 필드 라벨
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.clear), // 입력 초기화 아이콘
                               onPressed: () {
@@ -436,16 +438,15 @@ class _NaverMapAppState extends State<NaverMapApp> {
                             },
                           ),
                         ),
-                      DropdownButton<double>(
+                      DropdownButton<String>(
                         value: _selectedDistance,
-                        hint: const Text('달릴 거리 선택 (km)'),
-                        items: List.generate(10, (index) {
-                          final distance = (index + 1).toDouble();
-                          return DropdownMenuItem<double>(
-                            value: distance,
-                            child: Text('${distance.toStringAsFixed(1)} km'),
+                        hint: const Text('러닝 모드 선택'),
+                        items: ['초급', '중급', '고급', '프리런'].map((level) {
+                          return DropdownMenuItem<String>(
+                            value: level,
+                            child: Text(level),
                           );
-                        }),
+                        }).toList(),
                         onChanged: (value) {
                           setState(() {
                             _selectedDistance = value;
@@ -477,30 +478,61 @@ class _NaverMapAppState extends State<NaverMapApp> {
                               );
                               return;
                             }
-                            final totalDistance = _selectedDistance! * 1000;
 
-                            final halfDistance = totalDistance / 2;
+                            double minDistance, maxDistance;
+
+                            // 러닝 모드에 따른 거리 범위 설정
+                            switch (_selectedDistance) {
+                              case '초급':
+                                minDistance = 500; // 500m
+                                maxDistance = 3000; // 3km
+                                break;
+                              case '중급':
+                                minDistance = 3000; // 3km
+                                maxDistance = 6000; // 6km
+                                break;
+                              case '고급':
+                                minDistance = 6000; // 6km
+                                maxDistance = 10000; // 10km
+                                break;
+                              case '프리런':
+                                minDistance = 0; // 제한 없음
+                                maxDistance = double.infinity; // 제한 없음
+                                break;
+                              default:
+                                minDistance = 0;
+                                maxDistance = 0;
+                            }
+
+                            final totalDistance = (maxDistance == double.infinity)
+                                ? (minDistance + 6000) // 프리런 기본값 설정 (6km)
+                                : (minDistance + maxDistance) / 2;
 
                             _start = await getLocation(_startController.text);
-
-                            _addToSearchHistory(_startController.text);  // 🔥 검색 기록에 추가
+                            _addToSearchHistory(_startController.text); // 🔥 검색 기록 추가
 
                             int retryCount = 0;
-                            const int maxRetries = 10;  // 🔥 최대 재탐색 횟수
-
-                            bool isRouteFound = false;  // ✅ 경로 성공 여부
+                            const int maxRetries = 10; // 🔥 최대 재탐색 횟수
+                            bool isRouteFound = false; // ✅ 경로 성공 여부
 
                             while (retryCount < maxRetries) {
-                              // 🔄 경유지 생성 시 시드 변경 → 비슷한 경로 방지
-                              final waypoints = await _generateWaypoints(_start!, halfDistance, seed: DateTime.now().millisecondsSinceEpoch);
+                              // 경유지 생성
+                              final waypoints = await _generateWaypoints(
+                                _start!,
+                                totalDistance / 2,
+                                seed: DateTime.now().millisecondsSinceEpoch,
+                              );
+
                               _waypoints = await optimizeWaypoints(waypoints);
 
                               await _getDirections();
 
-                              // 🔎 입력 거리와 계산된 거리 비교
-                              double difference = (_calculatedDistance * 1000 - totalDistance).abs() / 1000;
+                              // 계산된 거리 확인
+                              final calculatedDistance = _calculatedDistance * 1000; // km → m 변환
 
-                              if (difference <= 0.6) {  // ✅ 오차 허용범위
+                              // 범위 내에 있으면 성공
+                              if (calculatedDistance >= minDistance &&
+                                  calculatedDistance <= maxDistance) {
                                 isRouteFound = true;
                                 break;
                               } else {

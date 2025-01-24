@@ -1,7 +1,7 @@
 import 'dart:async'; // 비동기 작업 (Future, Stream) 처리
 import 'package:flutter/material.dart'; // Flutter UI 구성
 import 'package:flutter_naver_map/flutter_naver_map.dart'; // 네이버 지도 SDK 사용
-import 'naver/naver.dart'; // naver.dart 파일 임포트
+import 'naver.dart'; // naver.dart 파일 임포트
 
 void main() async {
   await _initialize(); // 네이버 지도 SDK 초기화
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '달리기 코스 추천 어플리케이션',
+      title: 'EEE',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -36,7 +36,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('런닝메이트'),
+        title: Text('RUNNING MATE'),
       ),
       body: Center(
         child: ElevatedButton(
